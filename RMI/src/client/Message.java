@@ -1,4 +1,4 @@
-package lab2;
+package client;
 
 import java.io.Serializable;
 
@@ -6,9 +6,10 @@ public class Message implements Serializable {
 	private boolean isRemote;
 	private String method;
 	private Serializable[] args;
-	private String reference;
+	private ProxyHandler proxy;
 	private Serializable returnVal;
 	private String[] interfaceName;
+	private String reference;
 	public boolean isRemote() {
 		return isRemote;
 	}
@@ -27,11 +28,12 @@ public class Message implements Serializable {
 	public void setArgs(Serializable[] args) {
 		this.args = args;
 	}
-	public String getReference() {
-		return reference;
+
+	public ProxyHandler getProxy() {
+		return proxy;
 	}
-	public void setReference(String reference) {
-		this.reference = reference;
+	public void setProxy(ProxyHandler proxy) {
+		this.proxy = proxy;
 	}
 	public Serializable getReturnVal() {
 		return returnVal;
@@ -44,6 +46,12 @@ public class Message implements Serializable {
 	}
 	public void setInterfaceName(String[] interfaceName) {
 		this.interfaceName = interfaceName;
+	}
+	public String getReference() {
+		return reference;
+	}
+	public void setReference(String reference) {
+		this.reference = reference;
 	}
 	
 }

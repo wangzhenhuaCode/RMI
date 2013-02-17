@@ -1,4 +1,4 @@
-package lab2;
+package client;
 
 import java.lang.reflect.Proxy;
 
@@ -31,6 +31,6 @@ public class Registery {
 		for(int i=0;i<newMessage.getInterfaceName().length;i++){
 			interfaces[i]=Class.forName(newMessage.getInterfaceName()[i]);
 		}
-		return (Remote) Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(), interfaces, new ProxyHandler(newMessage.getReference()));
+		return (Remote) Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(), interfaces, newMessage.getProxy());
 	}
 }
