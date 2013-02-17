@@ -1,14 +1,14 @@
-package client;
+package util;
 
 import java.io.Serializable;
+import java.lang.reflect.Proxy;
 
 public class Message implements Serializable {
 	private boolean isRemote;
 	private String method;
 	private Serializable[] args;
-	private ProxyHandler proxy;
 	private Serializable returnVal;
-	private String[] interfaceName;
+	private String errorMessage;
 	private String reference;
 	public boolean isRemote() {
 		return isRemote;
@@ -29,29 +29,27 @@ public class Message implements Serializable {
 		this.args = args;
 	}
 
-	public ProxyHandler getProxy() {
-		return proxy;
-	}
-	public void setProxy(ProxyHandler proxy) {
-		this.proxy = proxy;
-	}
+
 	public Serializable getReturnVal() {
 		return returnVal;
 	}
 	public void setReturnVal(Serializable returnVal) {
 		this.returnVal = returnVal;
 	}
-	public String[] getInterfaceName() {
-		return interfaceName;
-	}
-	public void setInterfaceName(String[] interfaceName) {
-		this.interfaceName = interfaceName;
-	}
+	
+
 	public String getReference() {
 		return reference;
 	}
 	public void setReference(String reference) {
 		this.reference = reference;
 	}
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+
 	
 }

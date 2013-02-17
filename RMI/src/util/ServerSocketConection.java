@@ -1,4 +1,4 @@
-package Server;
+package util;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -50,11 +50,19 @@ public class ServerSocketConection {
 		}
 		return instance;
 	}
-	public static ServerSocketConection getInstance() throws Exception{
-		if(instance==null){
-			throw new Exception("Null instance");
-		}
+	public static ServerSocketConection getInstance(){
+		
 			return instance;
 		
+	}
+	public static Socket getNewSocket() throws InterruptedException{
+		Socket s=null;
+		synchronized(instance.messageQueue){
+			while(instance.messageQueue.isEmpty()){
+				instance.messageQueue.wait();
+			}
+			s=instance.messageQueue.poll();
+		}
+		return s;
 	}
 }

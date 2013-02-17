@@ -1,9 +1,14 @@
-package client;
+package Server;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+
+import util.Message;
+import util.Remote;
+
+import client.SocketConnection;
 
 public class ProxyHandler implements InvocationHandler, Remote {
 	private String reference;
@@ -28,13 +33,10 @@ public class ProxyHandler implements InvocationHandler, Remote {
 		}catch(Exception e){
 			throw new Exception("Arguments should be serilizatble");
 		}
+		message.setReference(reference);
 		Message newMessage=SocketConnection.communicate(message, serverHost, serverPort);
 		if(newMessage.isRemote()){
-			Class<?> interfaces[]=new Class<?>[newMessage.getInterfaceName().length];
-			for(int i=0;i<newMessage.getInterfaceName().length;i++){
-				interfaces[i]=Class.forName(newMessage.getInterfaceName()[i]);
-			}
-			return (Remote) Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(), interfaces, newMessage.getProxy());
+			return (Remote)newMessage.getReturnVal();
 		}else{
 			return newMessage.getReturnVal();
 		}

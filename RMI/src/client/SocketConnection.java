@@ -7,6 +7,8 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import util.Message;
+
 public class SocketConnection {
 	static SocketConnection instance=null;
 	private ServerSocket serversocket=null;

@@ -1,6 +1,9 @@
 package client;
 
-import java.lang.reflect.Proxy;
+import util.Message;
+import util.Remote;
+
+
 
 public class Registery {
 	static Registery instance=null;
@@ -27,10 +30,6 @@ public class Registery {
 		Message m=new Message();
 		m.setReference(name);
 		Message newMessage=SocketConnection.communicate(m, remotehostname, remoteport);
-		Class<?> interfaces[]=new Class<?>[newMessage.getInterfaceName().length];
-		for(int i=0;i<newMessage.getInterfaceName().length;i++){
-			interfaces[i]=Class.forName(newMessage.getInterfaceName()[i]);
-		}
-		return (Remote) Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(), interfaces, newMessage.getProxy());
+		return (Remote) newMessage.getReturnVal();
 	}
 }
