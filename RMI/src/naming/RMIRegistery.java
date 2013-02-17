@@ -1,4 +1,4 @@
-package Naming;
+package naming;
 
 public class RMIRegistery {
 

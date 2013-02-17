@@ -1,4 +1,4 @@
-package Naming;
+package naming;
 
 import util.Message;
 import util.MessageProcessor;
