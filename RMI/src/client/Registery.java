@@ -10,7 +10,7 @@ public class Registery {
 	private String remotehostname;
 	private Integer remoteport;
 	private Integer localport;
-	public static Registery createRigstery(String remotehostname,Integer remoteport,Integer localport) throws Exception{
+	public static Registery getRigstery(String remotehostname,Integer remoteport,Integer localport) throws Exception{
 		if(instance==null){
 			instance=new Registery();
 			instance.remoteport=remoteport;
@@ -30,6 +30,6 @@ public class Registery {
 		Message m=new Message();
 		m.setReference(name);
 		Message newMessage=SocketConnection.communicate(m, remotehostname, remoteport);
-		return (Remote) newMessage.getReturnVal();
+		return (Remote) newMessage.getValue();
 	}
 }

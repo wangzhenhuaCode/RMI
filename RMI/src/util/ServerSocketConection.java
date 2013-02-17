@@ -12,27 +12,22 @@ public class ServerSocketConection {
 	public static ServerSocketConection instance=null;
 	private Queue<Socket> messageQueue;
 	private Thread listen;
-	public static ServerSocketConection createServerSocketConnection(final Integer port){
+	private ServerSocket server;
+	public static ServerSocketConection createServerSocketConnection(final Integer port) throws IOException{
 		if(instance==null){
 			instance=new ServerSocketConection();
 			instance.messageQueue=new LinkedList<Socket>();
-			instance.listen=new Thread(new Runnable(){
-
+			instance.server= new ServerSocket(port);
+			instance.listen=new Thread(new Runnable(){	
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
-					ServerSocket server=null;
-					try {
-						server= new ServerSocket(port);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						System.out.println("Port repeated!");
-						return;
-					}
+					
+					
 					while(true){
 						Socket s=null;
 						try {
-							s=server.accept();
+							s=instance.server.accept();
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

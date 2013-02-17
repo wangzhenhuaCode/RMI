@@ -11,6 +11,10 @@ import util.Remote;
 import client.SocketConnection;
 
 public class ProxyHandler implements InvocationHandler, Remote {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String reference;
 	private String serverHost;
 	private Integer serverPort;
@@ -36,9 +40,9 @@ public class ProxyHandler implements InvocationHandler, Remote {
 		message.setReference(reference);
 		Message newMessage=SocketConnection.communicate(message, serverHost, serverPort);
 		if(newMessage.isRemote()){
-			return (Remote)newMessage.getReturnVal();
+			return (Remote)newMessage.getValue();
 		}else{
-			return newMessage.getReturnVal();
+			return newMessage.getValue();
 		}
 		
 	}

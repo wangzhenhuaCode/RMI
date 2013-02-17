@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 
 import util.DataTable;
 import util.Message;
+import util.MessageProcessor;
 import util.Remote;
 
 
@@ -54,7 +55,7 @@ public class ServerMessageProcessor implements MessageProcessor {
 		
 		newMessage.setRemote(remotabe);
 		try{
-			newMessage.setReturnVal((Serializable) val);
+			newMessage.setValue((Serializable) val);
 		}catch(Exception e){
 			newMessage.setErrorMessage("Remote error: "+e.toString());
 			return newMessage;

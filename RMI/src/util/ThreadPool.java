@@ -5,15 +5,17 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import Server.MessageProcessor;
 
 
 public class ThreadPool{
 	private Thread[] workerList;
-	public ThreadPool(int n, final Class<MessageProcessor> processClass){
-			workerList=new Thread[n];
+	static ThreadPool instance;
+	public static ThreadPool getInstance(int n, final Class<?> processClass ){
+		if(instance==null){
+		instance=new ThreadPool();
+		instance.workerList=new Thread[n];
 			for(int i=0;i<n;i++){
-				workerList[i]=new Thread(new Runnable(){
+				instance.workerList[i]=new Thread(new Runnable(){
 
 					@Override
 					public void run() {
@@ -31,7 +33,7 @@ public class ThreadPool{
 								in = new ObjectInputStream(s.getInputStream());
 								Message message=(Message) in.readObject();
 								in.close();
-								MessageProcessor mp=processClass.newInstance();
+								MessageProcessor mp=(MessageProcessor) processClass.newInstance();
 								Message newMessage=mp.process(message);
 								ObjectOutputStream out =new ObjectOutputStream(s.getOutputStream());
 								out.writeObject(newMessage);
@@ -55,8 +57,11 @@ public class ThreadPool{
 					}
 					
 				});
+				instance.workerList[i].start();
 			}
-		
+			
+		}
+		return instance;
 	}
 
 	

@@ -4,12 +4,22 @@ import java.io.Serializable;
 import java.lang.reflect.Proxy;
 
 public class Message implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public static Integer BIND_TO_REGISTERY=1;
+	public static Integer LOOK_UP=2;
+	public static Integer REMOTE_CALL=3;
+	public static Integer RETURN_VALUE=4;
+			
 	private boolean isRemote;
 	private String method;
 	private Serializable[] args;
-	private Serializable returnVal;
+	private Serializable value;
 	private String errorMessage;
 	private String reference;
+	private Integer messageType;
 	public boolean isRemote() {
 		return isRemote;
 	}
@@ -30,14 +40,21 @@ public class Message implements Serializable {
 	}
 
 
-	public Serializable getReturnVal() {
-		return returnVal;
-	}
-	public void setReturnVal(Serializable returnVal) {
-		this.returnVal = returnVal;
-	}
+
 	
 
+	public Serializable getValue() {
+		return value;
+	}
+	public void setValue(Serializable value) {
+		this.value = value;
+	}
+	public Integer getMessageType() {
+		return messageType;
+	}
+	public void setMessageType(Integer messageType) {
+		this.messageType = messageType;
+	}
 	public String getReference() {
 		return reference;
 	}

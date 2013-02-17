@@ -12,7 +12,7 @@ import util.Message;
 public class SocketConnection {
 	static SocketConnection instance=null;
 	private ServerSocket serversocket=null;
-	public static SocketConnection createSocket(Integer port) throws Exception {
+	public static SocketConnection createSocket(Integer port) throws IOException {
 		if(instance==null){
 				instance=new SocketConnection();
 				try {
@@ -20,7 +20,7 @@ public class SocketConnection {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					instance=null;
-					throw new Exception("Port number repeated");
+					throw e;
 				}
 			
 		}
