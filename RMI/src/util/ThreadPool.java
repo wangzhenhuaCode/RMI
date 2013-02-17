@@ -35,9 +35,11 @@ public class ThreadPool{
 								in.close();
 								MessageProcessor mp=(MessageProcessor) processClass.newInstance();
 								Message newMessage=mp.process(message);
-								ObjectOutputStream out =new ObjectOutputStream(s.getOutputStream());
-								out.writeObject(newMessage);
-								out.close();
+								if(newMessage!=null){
+									ObjectOutputStream out =new ObjectOutputStream(s.getOutputStream());
+									out.writeObject(newMessage);
+									out.close();
+								}
 								s.close();
 							}catch (IOException e) {
 								// TODO Auto-generated catch block

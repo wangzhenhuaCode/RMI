@@ -29,6 +29,7 @@ public class Registery {
 	public Remote lookUp(String name) throws Exception{
 		Message m=new Message();
 		m.setReference(name);
+		m.setMessageType(Message.LOOK_UP);
 		Message newMessage=SocketConnection.communicate(m, remotehostname, remoteport);
 		return (Remote) newMessage.getValue();
 	}

@@ -12,6 +12,7 @@ public class Message implements Serializable {
 	public static Integer LOOK_UP=2;
 	public static Integer REMOTE_CALL=3;
 	public static Integer RETURN_VALUE=4;
+	public static Integer RETURN_LOOK_UP=5;
 			
 	private boolean isRemote;
 	private String method;
