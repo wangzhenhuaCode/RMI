@@ -32,15 +32,21 @@ public class ThreadPool{
 							try {
 								in = new ObjectInputStream(s.getInputStream());
 								Message message=(Message) in.readObject();
+								String remoteIp=s.getInetAddress().getHostAddress();
+								System.out.println(remoteIp);
 								in.close();
+								s.close();
 								MessageProcessor mp=(MessageProcessor) processClass.newInstance();
 								Message newMessage=mp.process(message);
 								if(newMessage!=null){
-									ObjectOutputStream out =new ObjectOutputStream(s.getOutputStream());
+									Socket send=new Socket(remoteIp,message.getPort());
+									ObjectOutputStream out =new ObjectOutputStream(send.getOutputStream());
 									out.writeObject(newMessage);
 									out.close();
+									System.out.println("send message");
+									send.close();
 								}
-								s.close();
+								
 							}catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();

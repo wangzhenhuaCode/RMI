@@ -12,9 +12,11 @@ import util.Message;
 public class SocketConnection {
 	static SocketConnection instance=null;
 	private ServerSocket serversocket=null;
+	private Integer port;
 	public static SocketConnection createSocket(Integer port) throws IOException {
 		if(instance==null){
 				instance=new SocketConnection();
+				instance.port=port;
 				try {
 					instance.serversocket = new ServerSocket(port);
 				} catch (IOException e) {
@@ -37,7 +39,7 @@ public class SocketConnection {
 				throw new Exception("Connection failure");
 			}
 			ObjectOutputStream out =new ObjectOutputStream(socket.getOutputStream());
-			
+			message.setPort(instance.port);
 			out.writeObject(message);
 			out.close();
 			socket.close();

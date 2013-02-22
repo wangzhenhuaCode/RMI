@@ -23,6 +23,7 @@ public class RMIServer {
 	private String localHost;
 	public static RMIServer createServer(String registeryHost,Integer registeryPort,Integer serverPort,Integer poolsize) throws IOException{
 		if(instance==null){
+			instance=new RMIServer();
 			instance.registeryHost=registeryHost;
 			instance.registeryPort=registeryPort;
 			instance.ServerPort=serverPort;
@@ -33,6 +34,7 @@ public class RMIServer {
 	}
 	public static RMIServer createServer(String registeryHost,Integer registeryPort,Integer serverPort) throws IOException{
 		if(instance==null){
+			instance=new RMIServer();
 			instance.registeryHost=registeryHost;
 			instance.registeryPort=registeryPort;
 			instance.ServerPort=serverPort;
