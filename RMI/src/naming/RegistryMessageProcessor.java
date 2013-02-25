@@ -11,10 +11,12 @@ public class RegistryMessageProcessor implements MessageProcessor {
 	@Override
 	public Message process(Message message) {
 		// TODO Auto-generated method stub
-		if(message.getMessageType()==Message.BIND_TO_REGISTERY){
+		System.out.println("Process message");
+		if(message.getMessageType().equals(Message.BIND_TO_REGISTERY)){
 			DataTable.getInstance().put(message.getReference(), message.getValue());
 			return null;
-		}else if(message.getMessageType()==Message.LOOK_UP){
+		}else if(message.getMessageType().equals(Message.LOOK_UP)){
+			System.out.println("look up");
 			Serializable obj=(Serializable) DataTable.getInstance().get(message.getReference());
 			Message newMessage=new Message();
 			newMessage.setValue(obj);

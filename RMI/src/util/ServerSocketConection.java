@@ -23,7 +23,7 @@ public class ServerSocketConection {
 				public void run() {
 					// TODO Auto-generated method stub
 					
-					
+					System.out.println("Start listening");
 					while(true){
 						Socket s=null;
 						try {
@@ -32,6 +32,7 @@ public class ServerSocketConection {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+						System.out.println("Receive message");
 						synchronized(instance.messageQueue){
 							instance.messageQueue.add(s);
 							instance.messageQueue.notify();

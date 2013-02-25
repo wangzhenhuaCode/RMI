@@ -31,10 +31,11 @@ public class ProxyHandler implements InvocationHandler, Remote {
 			throws Throwable {
 		// TODO Auto-generated method stub
 		Message message=new Message();
-		message.setMethod(arg1.toString());
+		message.setMethod(arg1.getName());
 		try{
-			message.setArgs((Serializable[]) arg2);
+			message.setArgs(arg2);
 		}catch(Exception e){
+			e.printStackTrace();
 			throw new Exception("Arguments should be serilizatble");
 		}
 		message.setReference(reference);

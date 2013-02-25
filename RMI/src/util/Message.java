@@ -16,11 +16,12 @@ public class Message implements Serializable {
 			
 	private boolean isRemote;
 	private String method;
-	private Serializable[] args;
+	private Object[] args;
 	private Serializable value;
 	private String errorMessage;
 	private String reference;
 	private Integer messageType;
+	private Integer port;
 	public boolean isRemote() {
 		return isRemote;
 	}
@@ -33,17 +34,24 @@ public class Message implements Serializable {
 	public void setMethod(String method) {
 		this.method = method;
 	}
-	public Serializable[] getArgs() {
-		return args;
-	}
-	public void setArgs(Serializable[] args) {
-		this.args = args;
-	}
+
 
 
 
 	
 
+	public Object[] getArgs() {
+		return args;
+	}
+	public void setArgs(Object[] args) {
+		this.args = args;
+	}
+	public Integer getPort() {
+		return port;
+	}
+	public void setPort(Integer port) {
+		this.port = port;
+	}
 	public Serializable getValue() {
 		return value;
 	}
