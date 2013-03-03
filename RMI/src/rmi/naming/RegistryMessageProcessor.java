@@ -16,9 +16,9 @@ public class RegistryMessageProcessor implements MessageProcessor {
 			DataTable.getInstance().put(message.getReference(), message.getValue());
 			return null;
 		}else if(message.getMessageType().equals(Message.LOOK_UP)){
-			System.out.println("look up");
 			Serializable obj=(Serializable) DataTable.getInstance().get(message.getReference());
 			Message newMessage=new Message();
+			newMessage.setResponseId(message.getMessageId());
 			newMessage.setValue(obj);
 			newMessage.setRemote(true);
 			newMessage.setMessageType(Message.RETURN_LOOK_UP);

@@ -11,7 +11,7 @@ import rmi.util.ThreadPool;
 
 /**
  *
- *  Class for initialize registry
+ *  Class for initialize registry.
  *  The first argument is the port number for registry
  */
 public class RMIRegistry {

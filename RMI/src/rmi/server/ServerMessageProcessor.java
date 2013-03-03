@@ -14,6 +14,7 @@ public class ServerMessageProcessor implements MessageProcessor {
 
 	public Message process(Message message) {
 		Message newMessage = new Message();
+		newMessage.setResponseId(message.getMessageId());
 		Object obj = DataTable.getInstance().get(message.getReference());
 		Object val = null;
 		// Multithread singleton method invocation;
