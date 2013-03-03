@@ -26,18 +26,15 @@ public class ServerMessageProcessor implements MessageProcessor {
 			try {
 				method = type.getMethod(message.getMethod(), paramaterType);
 			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
 				newMessage.setErrorMessage("Remote error: " + e.toString());
 				return newMessage;
 			} catch (NoSuchMethodException e) {
-				// TODO Auto-generated catch block
 				newMessage.setErrorMessage("Remote error: " + e.toString());
 				return newMessage;
 			}
 			try {
 				val = method.invoke(obj, message.getArgs());
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				newMessage.setErrorMessage("Remote error: " + e.toString());
 				return newMessage;
 			}

@@ -21,18 +21,18 @@ public class ServerSocketConection {
 			instance.listen=new Thread(new Runnable(){	
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
 					
-					System.out.println("Start listening");
+					
+					
 					while(true){
 						Socket s=null;
 						try {
 							s=instance.server.accept();
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
+							
 							e.printStackTrace();
 						}
-						System.out.println("Receive message");
+						
 						synchronized(instance.messageQueue){
 							instance.messageQueue.add(s);
 							instance.messageQueue.notify();

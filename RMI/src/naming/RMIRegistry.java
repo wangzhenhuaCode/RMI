@@ -8,13 +8,14 @@ import util.DataTable;
 import util.ServerSocketConection;
 import util.ThreadPool;
 
-public class RMIRegistery {
+/**
+ *
+ *  Class for initialize registry
+ *  The first argument is the port number for registry
+ */
+public class RMIRegistry {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		if(args.length!=1){
 			System.out.println("Please provide RMI registery port number");
 			return;
@@ -30,7 +31,6 @@ public class RMIRegistery {
 		try {
 			ServerSocketConection.createServerSocketConnection(port);
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			System.out.println("Port number repeated!");
 			return;
 		}
@@ -39,7 +39,6 @@ public class RMIRegistery {
 		try {
 			addr = InetAddress.getLocalHost();
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String local = addr.getHostAddress();

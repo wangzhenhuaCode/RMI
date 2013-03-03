@@ -23,7 +23,6 @@ public class SocketConnection {
 			try {
 				instance.serversocket = new ServerSocket(port);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				instance = null;
 				throw e;
 			}
@@ -42,7 +41,6 @@ public class SocketConnection {
 		try {
 			socket.connect(new InetSocketAddress(hostname, port));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			throw new Exception("Connection failure");
 		}
 		ObjectOutputStream out = new ObjectOutputStream(
@@ -56,7 +54,10 @@ public class SocketConnection {
 		newMessage = (Message) in.readObject();
 		in.close();
 		s.close();
-
+		String errorMessage=newMessage.getErrorMessage();
+		if(errorMessage!=null&&!errorMessage.equals("")){
+			throw new Exception(errorMessage);
+		}
 		return newMessage;
 	}
 }

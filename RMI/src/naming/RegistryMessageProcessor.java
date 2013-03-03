@@ -10,8 +10,7 @@ public class RegistryMessageProcessor implements MessageProcessor {
 
 	@Override
 	public Message process(Message message) {
-		// TODO Auto-generated method stub
-		System.out.println("Process message");
+		
 		if(message.getMessageType().equals(Message.BIND_TO_REGISTERY)){
 			DataTable.getInstance().put(message.getReference(), message.getValue());
 			return null;

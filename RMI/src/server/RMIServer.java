@@ -12,8 +12,13 @@ import java.util.Date;
 import util.DataTable;
 import util.Message;
 import util.ServerSocketConection;
+import util.StubInfo;
 import util.ThreadPool;
 
+/**
+ * 
+ *  Class for RMI server.
+ */
 public class RMIServer {
 	private String registeryHost;
 	private Integer registeryPort;
@@ -21,6 +26,14 @@ public class RMIServer {
 	private Integer threadPoolSize;
 	static RMIServer instance;
 	private String localHost;
+	/**
+	 * @param registeryHost the host name for registry
+	 * @param registeryPort the port number for registry
+	 * @param serverPort the local server port
+	 * @param poolsize the size of thread pool in handling client request
+	 * @return
+	 * @throws IOException
+	 */
 	public static RMIServer createServer(String registeryHost,Integer registeryPort,Integer serverPort,Integer poolsize) throws IOException{
 		if(instance==null){
 			instance=new RMIServer();
@@ -32,6 +45,14 @@ public class RMIServer {
 		}
 		return instance;
 	}
+	/**
+	 * Initialize RMI server with thread pool size 5
+	 * @param registeryHost the host name for registry
+	 * @param registeryPort the port number for registry 
+	 * @param serverPort the local server port
+	 * @return
+	 * @throws IOException
+	 */
 	public static RMIServer createServer(String registeryHost,Integer registeryPort,Integer serverPort) throws IOException{
 		if(instance==null){
 			instance=new RMIServer();
@@ -50,13 +71,28 @@ public class RMIServer {
 		InetAddress addr = InetAddress.getLocalHost();
 		localHost = addr.getHostAddress();	
 	}
+	/**
+	 * export stub information object which will be bind to registry.
+	 * @param obj the implementation object
+	 * @return stub information object
+	 */
 	public static Object exportStub(Object obj){
 		Class<?> interfaces[]=obj.getClass().getInterfaces();
 		String reference=obj.getClass().toString()+"_"+(new Date()).getTime();
 		DataTable.getInstance().put(reference, obj);
-		ProxyHandler px=new ProxyHandler(reference,instance.localHost,instance.ServerPort);
-		return Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(), interfaces, px);
+		String[] interfaceName=new String[interfaces.length];
+		for(int i=0;i<interfaces.length;i++){
+			interfaceName[i]=interfaces[i].getName();
+		}
+		StubInfo stub=new StubInfo(instance.localHost,instance.ServerPort,reference,interfaceName);
+		return stub;
 	}
+	/**
+	 * bind the stub information object to the remote registry.
+	 * @param name the name of the stub on the registry
+	 * @param obj the stub informaton object
+	 * @throws IOException
+	 */
 	public static void bindToRegistery(String name,Serializable obj) throws IOException{
 		Socket socket=new Socket();
 		socket.connect(new InetSocketAddress(instance.registeryHost,instance.registeryPort));

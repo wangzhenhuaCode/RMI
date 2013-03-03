@@ -1,4 +1,4 @@
-package server;
+package client;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
@@ -8,17 +8,19 @@ import java.lang.reflect.Proxy;
 import util.Message;
 import util.Remote;
 
-import client.SocketConnection;
 
+/**
+ * @author zhenhuaw
+ * proxy class for method invocation.
+ */
 public class ProxyHandler implements InvocationHandler, Remote {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private String reference;
 	private String serverHost;
 	private Integer serverPort;
 	
+
 	public ProxyHandler(String reference, String serverHost, Integer serverPort) {
 		super();
 		this.reference = reference;
@@ -29,7 +31,6 @@ public class ProxyHandler implements InvocationHandler, Remote {
 	@Override
 	public Object invoke(Object arg0, Method arg1, Object[] arg2)
 			throws Throwable {
-		// TODO Auto-generated method stub
 		Message message=new Message();
 		message.setMethod(arg1.getName());
 		try{

@@ -19,13 +19,13 @@ public class ThreadPool{
 
 					@Override
 					public void run() {
-						// TODO Auto-generated method stub
+						
 						while(true){
 							Socket s=null;
 							try {
 								s=ServerSocketConection.getNewSocket();
 							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
+								
 								e.printStackTrace();
 							}
 							ObjectInputStream in = null;
@@ -33,7 +33,7 @@ public class ThreadPool{
 								in = new ObjectInputStream(s.getInputStream());
 								Message message=(Message) in.readObject();
 								String remoteIp=s.getInetAddress().getHostAddress();
-								System.out.println(remoteIp);
+								
 								in.close();
 								s.close();
 								MessageProcessor mp=(MessageProcessor) processClass.newInstance();
@@ -43,21 +43,21 @@ public class ThreadPool{
 									ObjectOutputStream out =new ObjectOutputStream(send.getOutputStream());
 									out.writeObject(newMessage);
 									out.close();
-									System.out.println("send message");
+									
 									send.close();
 								}
 								
 							}catch (IOException e) {
-								// TODO Auto-generated catch block
+								
 								e.printStackTrace();
 							} catch (ClassNotFoundException e) {
-								// TODO Auto-generated catch block
+								
 								e.printStackTrace();
 							} catch (InstantiationException e) {
-								// TODO Auto-generated catch block
+								
 								e.printStackTrace();
 							} catch (IllegalAccessException e) {
-								// TODO Auto-generated catch block
+								
 								e.printStackTrace();
 							}
 							
