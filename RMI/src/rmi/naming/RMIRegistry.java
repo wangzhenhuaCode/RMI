@@ -1,12 +1,13 @@
-package naming;
+package rmi.naming;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import util.DataTable;
-import util.ServerSocketConection;
-import util.ThreadPool;
+import rmi.util.DataTable;
+import rmi.util.ServerSocketConection;
+import rmi.util.ThreadPool;
+
 
 /**
  *

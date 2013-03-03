@@ -1,4 +1,4 @@
-package client;
+package rmi.client;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -7,7 +7,9 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import util.Message;
+import rmi.util.Message;
+import rmi.util.RemoteException;
+
 
 public class SocketConnection {
 
@@ -33,16 +35,14 @@ public class SocketConnection {
 
 	@SuppressWarnings("resource")
 	public synchronized static Message communicate(Message message,
-			String hostname, Integer port) throws Exception {
+			String hostname, Integer port) throws RemoteException, IOException, ClassNotFoundException {
 		if (instance == null)
-			throw new Exception("Null socketConnection");
+			throw new IOException("Null socketConnection");
 		Message newMessage = null;
 		Socket socket = new Socket();
-		try {
-			socket.connect(new InetSocketAddress(hostname, port));
-		} catch (IOException e) {
-			throw new Exception("Connection failure");
-		}
+		
+		socket.connect(new InetSocketAddress(hostname, port));
+		
 		ObjectOutputStream out = new ObjectOutputStream(
 				socket.getOutputStream());
 		message.setPort(instance.port);
@@ -54,9 +54,10 @@ public class SocketConnection {
 		newMessage = (Message) in.readObject();
 		in.close();
 		s.close();
+		
 		String errorMessage=newMessage.getErrorMessage();
 		if(errorMessage!=null&&!errorMessage.equals("")){
-			throw new Exception(errorMessage);
+			throw new RemoteException(errorMessage);
 		}
 		return newMessage;
 	}

@@ -1,4 +1,4 @@
-package util;
+package rmi.util;
 
 import java.util.Hashtable;
 

@@ -1,11 +1,14 @@
-package client;
+package rmi.client;
 
+import java.io.IOException;
 import java.lang.reflect.Proxy;
 
+import rmi.util.Message;
+import rmi.util.Remote;
+import rmi.util.RemoteException;
+import rmi.util.StubInfo;
 
-import util.Message;
-import util.Remote;
-import util.StubInfo;
+
 
 
 
@@ -24,9 +27,9 @@ public class Registry {
 	 * @param remoteport Registery port number
 	 * @param localport local port number
 	 * @return
-	 * @throws Exception
+	 * @throws IOException 
 	 */
-	public static Registry getRegistery(String remotehostname,Integer remoteport,Integer localport) throws Exception{
+	public static Registry getRegistery(String remotehostname,Integer remoteport,Integer localport) throws IOException{
 		
 		if(instance==null){
 			instance=new Registry();
@@ -41,18 +44,20 @@ public class Registry {
 	/**
 	 * Look up the object on the registery
 	 * @param name the name of the return object
-	 * @return
-	 * @throws Exception
+	 * @return stub for remote object
+	 * @throws RemoteException
+	 * @throws ClassNotFoundException 
+	 * @throws IOException 
 	 */
-	public static Remote lookUp(String name) throws Exception{
-		if(instance==null)throw new Exception("Null registery instance");
+	public static Remote lookUp(String name) throws RemoteException, ClassNotFoundException, IOException{
+		if(instance==null)throw new IOException("Null registery instance");
 		Message m=new Message();
 		m.setReference(name);
 		m.setMessageType(Message.LOOK_UP);
 		Message newMessage=SocketConnection.communicate(m, instance.remotehostname, instance.remoteport);
 		String errorMessage=newMessage.getErrorMessage();
 		if(errorMessage!=null&&!errorMessage.equals("")){
-			throw new Exception(errorMessage);
+			throw new RemoteException(errorMessage);
 		}
 		StubInfo stubinfor=(StubInfo) newMessage.getValue();
 		ProxyHandler px=new ProxyHandler(stubinfor.getReference(),stubinfor.getServerHost(),stubinfor.getPort());

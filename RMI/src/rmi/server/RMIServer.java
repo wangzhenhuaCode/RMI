@@ -1,4 +1,4 @@
-package server;
+package rmi.server;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -9,11 +9,12 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Date;
 
-import util.DataTable;
-import util.Message;
-import util.ServerSocketConection;
-import util.StubInfo;
-import util.ThreadPool;
+import rmi.util.DataTable;
+import rmi.util.Message;
+import rmi.util.ServerSocketConection;
+import rmi.util.StubInfo;
+import rmi.util.ThreadPool;
+
 
 /**
  * 

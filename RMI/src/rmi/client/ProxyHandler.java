@@ -1,16 +1,18 @@
-package client;
+package rmi.client;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-import util.Message;
-import util.Remote;
+import rmi.util.Message;
+import rmi.util.Remote;
+
 
 
 /**
- * @author zhenhuaw
+ * 
  * proxy class for method invocation.
  */
 public class ProxyHandler implements InvocationHandler, Remote {
@@ -37,7 +39,7 @@ public class ProxyHandler implements InvocationHandler, Remote {
 			message.setArgs(arg2);
 		}catch(Exception e){
 			e.printStackTrace();
-			throw new Exception("Arguments should be serilizatble");
+			throw new IOException("Arguments should be serilizatble");
 		}
 		message.setReference(reference);
 		Message newMessage=SocketConnection.communicate(message, serverHost, serverPort);

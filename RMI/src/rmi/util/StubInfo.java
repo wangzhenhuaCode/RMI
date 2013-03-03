@@ -1,4 +1,4 @@
-package util;
+package rmi.util;
 
 /**
  *  Class for storing stub information, which will be stored on the registry.

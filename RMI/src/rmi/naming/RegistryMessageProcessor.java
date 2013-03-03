@@ -1,10 +1,11 @@
-package naming;
+package rmi.naming;
 
 import java.io.Serializable;
 
-import util.DataTable;
-import util.Message;
-import util.MessageProcessor;
+import rmi.util.DataTable;
+import rmi.util.Message;
+import rmi.util.MessageProcessor;
+
 
 public class RegistryMessageProcessor implements MessageProcessor {
 

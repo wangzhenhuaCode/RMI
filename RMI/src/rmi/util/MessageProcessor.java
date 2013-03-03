@@ -1,4 +1,4 @@
-package util;
+package rmi.util;
 
 
 public interface MessageProcessor {
