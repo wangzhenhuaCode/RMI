@@ -48,17 +48,14 @@ public class ServerMessageProcessor implements MessageProcessor {
 		}
 
 		Class<?> interfaces[] = val.getClass().getInterfaces();
-		boolean remotabe = false, proxyable = true;
+		boolean remotabe = false, proxyable = Proxy.isProxyClass(val.getClass());
 		for (int j = 0; j < interfaces.length; j++) {
 			if (interfaces[j].toString().equals(Remote.class.toString())) {
 				remotabe = true;
 			}
-			if (interfaces[j].toString().equals(
-					InvocationHandler.class.toString())) {
-				proxyable = false;
-			}
+			
 		}
-		if (remotabe && proxyable) {
+		if (remotabe && !proxyable) {
 			String reference = message.getMessageId() + "_"
 					+ (new Date()).getTime();
 			if (localAddress == null || localAddress.equals("")) {
