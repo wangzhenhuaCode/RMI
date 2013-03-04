@@ -1,11 +1,17 @@
 package rmi.util;
 
+import java.io.Serializable;
+
 /**
  *  Class for storing stub information, which will be stored on the registry.
  *
  */
-public class StubInfo  implements Remote{
+public class StubInfo  implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String serverHost;
 	private Integer port;
 	private String reference;

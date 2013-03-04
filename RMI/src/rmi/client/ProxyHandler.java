@@ -15,7 +15,7 @@ import rmi.util.Remote;
  * 
  * proxy class for method invocation.
  */
-public class ProxyHandler implements InvocationHandler, Remote {
+public class ProxyHandler implements InvocationHandler, Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private String reference;
@@ -43,11 +43,9 @@ public class ProxyHandler implements InvocationHandler, Remote {
 		}
 		message.setReference(reference);
 		Message newMessage=SocketConnection.communicate(message, serverHost, serverPort);
-		if(newMessage.isRemote()){
-			return (Remote)newMessage.getValue();
-		}else{
-			return newMessage.getValue();
-		}
+		
+		return newMessage.getValue();
+		
 		
 	}
 	

@@ -49,7 +49,7 @@ public class Registry {
 	 * @throws ClassNotFoundException 
 	 * @throws IOException 
 	 */
-	public static Remote lookUp(String name) throws RemoteException, ClassNotFoundException, IOException{
+	public static Object lookUp(String name) throws RemoteException, ClassNotFoundException, IOException{
 		if(instance==null)throw new IOException("Null registery instance");
 		Message m=new Message();
 		m.setReference(name);
@@ -65,6 +65,6 @@ public class Registry {
 		for(int i=0;i<stubinfor.getInterfaces().length;i++){
 			interfaces[i]=Class.forName(stubinfor.getInterfaces()[i]);
 		}
-		return (Remote) Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(),interfaces , px);
+		return Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(),interfaces , px);
 	}
 }

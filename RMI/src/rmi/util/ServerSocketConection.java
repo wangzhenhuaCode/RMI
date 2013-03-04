@@ -13,11 +13,13 @@ public class ServerSocketConection {
 	private Queue<Socket> messageQueue;
 	private Thread listen;
 	private ServerSocket server;
+	private Integer port;
 	public static ServerSocketConection createServerSocketConnection(final Integer port) throws IOException{
 		if(instance==null){
 			instance=new ServerSocketConection();
 			instance.messageQueue=new LinkedList<Socket>();
 			instance.server= new ServerSocket(port);
+			instance.port=port;
 			instance.listen=new Thread(new Runnable(){	
 				@Override
 				public void run() {
@@ -60,5 +62,8 @@ public class ServerSocketConection {
 			s=instance.messageQueue.poll();
 		}
 		return s;
+	}
+	public Integer getPort() {
+		return port;
 	}
 }
