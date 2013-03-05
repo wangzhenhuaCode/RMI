@@ -1,7 +1,6 @@
 package rmi.util;
 
 import java.io.Serializable;
-import java.lang.reflect.Proxy;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Date;

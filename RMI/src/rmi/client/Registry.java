@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.lang.reflect.Proxy;
 
 import rmi.util.Message;
-import rmi.util.Remote;
 import rmi.util.RemoteException;
 import rmi.util.StubInfo;
 
