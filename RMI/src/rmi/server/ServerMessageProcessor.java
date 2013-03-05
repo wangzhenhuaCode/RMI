@@ -24,22 +24,25 @@ public class ServerMessageProcessor implements MessageProcessor {
 		newMessage.setResponseId(message.getMessageId());
 		Object obj = DataTable.getInstance().get(message.getReference());
 		Object val = null;
+		Method method = null;
 		// Multithread singleton method invocation;
 		Class<?> type = obj.getClass();
-		Class<?> paramaterType[] = new Class<?>[message.getArgs().length];
-		for (int i = 0; i < message.getArgs().length; i++) {
-			paramaterType[i] = message.getArgs()[i].getClass();
+		Method methods[] = type.getMethods();
+		boolean find=false;
+		for (int i = 0; i < methods.length; i++) {
+			String fullName=methods[i].toString();
+			String temp=methods[i].getName()+fullName.substring(fullName.indexOf("("),fullName.indexOf(")")+1);
+			if(temp.equals(message.getMethod())){
+				method=methods[i];
+				find=true;
+				break;
+			}
 		}
-		Method method = null;
-		try {
-			method = type.getMethod(message.getMethod(), paramaterType);
-		} catch (SecurityException e) {
-			newMessage.setErrorMessage("Remote error: " + e.toString());
-			return newMessage;
-		} catch (NoSuchMethodException e) {
-			newMessage.setErrorMessage("Remote error: " + e.toString());
+		if(!find){
+			newMessage.setErrorMessage("Remote error: No such method" );
 			return newMessage;
 		}
+		
 		try {
 			val = method.invoke(obj, message.getArgs());
 		} catch (Exception e) {
@@ -55,6 +58,7 @@ public class ServerMessageProcessor implements MessageProcessor {
 			}
 			
 		}
+		
 		if (remotabe && !proxyable) {
 			String reference = message.getMessageId() + "_"
 					+ (new Date()).getTime();

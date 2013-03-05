@@ -9,6 +9,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Date;
 
+import rmi.client.SocketConnection;
 import rmi.util.DataTable;
 import rmi.util.Message;
 import rmi.util.ServerSocketConection;
@@ -27,27 +28,30 @@ public class RMIServer {
 	private Integer threadPoolSize;
 	static RMIServer instance;
 	private String localHost;
+	private Integer clientPort;
 	/**
 	 * @param registeryHost the host name for registry
 	 * @param registeryPort the port number for registry
 	 * @param serverPort the local server port
 	 * @param poolsize the size of thread pool in handling client request
+	 * @param clientPort the socket port number when the server need to call some remote objects on other servers.
 	 * @return
 	 * @throws IOException
 	 */
-	public static RMIServer createServer(String registeryHost,Integer registeryPort,Integer serverPort,Integer poolsize) throws IOException{
+	public static RMIServer createServer(String registeryHost,Integer registeryPort,Integer serverPort,Integer poolsize,Integer clientPort) throws IOException{
 		if(instance==null){
 			instance=new RMIServer();
 			instance.registeryHost=registeryHost;
 			instance.registeryPort=registeryPort;
 			instance.ServerPort=serverPort;
 			instance.threadPoolSize=poolsize;
+			instance.clientPort=clientPort;
 			instance.initialize();
 		}
 		return instance;
 	}
 	/**
-	 * Initialize RMI server with thread pool size 5
+	 * Initialize RMI server with thread pool size 5, and client port with 1931
 	 * @param registeryHost the host name for registry
 	 * @param registeryPort the port number for registry 
 	 * @param serverPort the local server port
@@ -61,6 +65,7 @@ public class RMIServer {
 			instance.registeryPort=registeryPort;
 			instance.ServerPort=serverPort;
 			instance.threadPoolSize=5;
+			instance.clientPort=1931;
 			instance.initialize();
 		}
 		return instance;
@@ -70,7 +75,8 @@ public class RMIServer {
 		ServerSocketConection.createServerSocketConnection(ServerPort);
 		ThreadPool.getInstance(threadPoolSize, ServerMessageProcessor.class);
 		InetAddress addr = InetAddress.getLocalHost();
-		localHost = addr.getHostAddress();	
+		localHost = addr.getHostAddress();
+		SocketConnection.createSocket(clientPort);
 	}
 	/**
 	 * export stub information object which will be bind to registry.

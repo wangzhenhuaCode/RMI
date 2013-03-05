@@ -14,8 +14,13 @@ public class ClientTestMain {
 		// TODO Auto-generated method stub
 		try {
 			Registry.getRegistery("127.0.0.1", 1928, 1930);
-			IConvertNumber stub=(IConvertNumber)Registry.lookUp("num");
-			System.out.println(stub.getNum("1234"));
+			IPeopleFactory peopleFactory=(IPeopleFactory)Registry.lookUp("people");
+			IWorkFactory workFactory=(IWorkFactory)Registry.lookUp("work");
+			IPeople people=peopleFactory.getPeople("Jack");
+			IWork work=workFactory.getWork("Distributed System homework");
+			System.out.println(people.work(work));
+			System.out.println("Finished work:");
+			System.out.println(people.getFinishedWork().getWorkName());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -26,6 +31,7 @@ public class ClientTestMain {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.exit(0);
 		
 	}
 

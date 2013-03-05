@@ -34,7 +34,9 @@ public class ProxyHandler implements InvocationHandler, Serializable {
 	public Object invoke(Object arg0, Method arg1, Object[] arg2)
 			throws Throwable {
 		Message message=new Message();
-		message.setMethod(arg1.getName());
+		String fullName=arg1.toString();
+		String method=arg1.getName()+fullName.substring(fullName.indexOf("("),fullName.indexOf(")")+1);
+		message.setMethod(method);
 		try{
 			message.setArgs(arg2);
 		}catch(Exception e){

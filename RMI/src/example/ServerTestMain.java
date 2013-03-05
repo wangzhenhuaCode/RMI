@@ -6,7 +6,7 @@ import java.io.Serializable;
 import rmi.server.RMIServer;
 
 
-public class SeverTestMain {
+public class ServerTestMain {
 
 	/**
 	 * @param args
@@ -19,10 +19,13 @@ public class SeverTestMain {
 
 			e.printStackTrace();
 		}
-		ConvertNumerberImp imp = new ConvertNumerberImp();
-		Serializable stub = (Serializable) RMIServer.exportStub(imp);
+		PeopleFactory people = new PeopleFactory();
+		Serializable stub1 = (Serializable) RMIServer.exportStub(people);
+		WorkFactory work = new WorkFactory();
+		Serializable stub2 = (Serializable) RMIServer.exportStub(work);
 		try {
-			RMIServer.bindToRegistery("num", stub);
+			RMIServer.bindToRegistery("people", stub1);
+			RMIServer.bindToRegistery("work", stub2);
 		} catch (IOException e) {
 
 			e.printStackTrace();
